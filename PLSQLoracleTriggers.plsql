@@ -1,0 +1,42 @@
+-- CREATE OR REPLACE TRIGGER UPDATE_PRODUCT_AVAILABLE
+--
+--  BEFORE INSERT OR UPDATE
+--  ON УНИКАЛЬНЫЙ_ТОВАР
+--  FOR EACH ROW
+-- DECLARE
+--
+--     v_total_quantity NUMBER;
+-- BEGIN
+--         SELECT NVL(SUM(1),0)
+--         INTO v_total_quantity
+--         FROM УНИКАЛЬНЫЙ_ТОВАР
+--         WHERE ТОВАР_ТОВАР_ID = :NEW.ТОВАР_ТОВАР_ID AND ПРОДАН = 0;
+--
+--         UPDATE ТОВАР
+--         SET НАЛИЧИЕ_НА_СКЛАДЕ = v_total_quantity
+--         WHERE ТОВАР_ID = :NEW.ТОВАР_ТОВАР_ID;
+--
+-- END;
+--
+
+
+-- CREATE OR REPLACE TRIGGER ПРОВЕРКА_СОТРУДНИКА
+--
+--  BEFORE INSERT OR UPDATE
+--  ON ВОЗВРАТ
+--  FOR EACH ROW
+-- DECLARE
+--
+--   v_employee_position VARCHAR2(50);
+-- BEGIN
+--
+--   SELECT ДОЛЖНОСТЬ
+--   INTO v_employee_position
+--   FROM СОТРУДНИК
+--   WHERE СОТРУДНИК_ID = :NEW.СОТРУДНИК_СОТРУДНИК_ID;
+--
+--   IF v_employee_position != 'Менеджер по возвратам' THEN
+--     RAISE_APPLICATION_ERROR(-20001, 'Employee must be Refund Manager.');
+--   END IF;
+--
+-- END;
